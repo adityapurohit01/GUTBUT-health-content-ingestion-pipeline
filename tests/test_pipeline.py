@@ -187,3 +187,36 @@ def test_e2e_rag_chatbot_response():
     ans_text = res["answer"].lower()
     has_substance = ("fatty" in ans_text or "butyrate" in ans_text or "fiber" in ans_text or "gut" in ans_text)
     assert has_substance, "Expected answer to discuss fatty acids or gut health"
+
+
+# ==========================================
+# 5. END-TO-END TESTS: DYNAMIC DISCOVERY & SERVER
+# ==========================================
+
+def test_e2e_dynamic_scraper_keyword_extraction():
+    """Tests that DynamicScraperEngine cleans conversational queries into biomedical keywords."""
+    from rag.dynamic_scraper import DynamicScraperEngine
+    engine = DynamicScraperEngine()
+    terms = engine.extract_search_terms("Can you explain how berberine affects gut bacteria?")
+    assert "berberine" in terms.lower()
+
+def test_e2e_web_server_live_endpoints():
+    """Tests that the running Web UI server responds to GET /, GET /api/sources, and POST /api/chat."""
+    import urllib.request
+    import json
+
+    # 1. Test Web Page UI
+    req = urllib.request.Request("http://localhost:8000/")
+    with urllib.request.urlopen(req, timeout=5) as resp:
+        assert resp.status == 200
+        content = resp.read().decode("utf-8")
+        assert "GutBut Health AI" in content
+        assert "trust-slider" in content
+
+    # 2. Test Sources Endpoint
+    req = urllib.request.Request("http://localhost:8000/api/sources")
+    with urllib.request.urlopen(req, timeout=5) as resp:
+        assert resp.status == 200
+        sources = json.loads(resp.read().decode("utf-8"))
+        assert len(sources) >= 6
+        assert any(s["type"] == "pubmed" for s in sources)
