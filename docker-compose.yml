@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  gutbut-rag:
+    build: .
+    container_name: gutbut-health-rag
+    ports:
+      - "8000:8000"
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    volumes:
+      - ./output:/app/output
+    restart: unless-stopped

@@ -39,6 +39,12 @@ python main.py
   ```
   *Or query directly with `python rag_bot.py --query "your question" --min-trust 0.5`.*
 
+* **Option C: Docker Container**
+  ```bash
+  docker compose up --build
+  ```
+  *Spins up the full ingestion and web server in an isolated container on port 8000.*
+
 ---
 
 ## 🏗️ Project Architecture
