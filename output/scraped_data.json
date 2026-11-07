@@ -182,5 +182,43 @@
         "content_chunks": [
             "Growth analysis of pulmonary metastases from salivary gland tumors.. Journal: AJR. American journal of roentgenology. Three cases of primary salivary gland tumors with lung metastasis are presented with extremely long survival (six, ten, and twelve years). The tumor doubling time was calculated and the growth rate of the pulmonary metastasis was found to be slow and erratic. A simplified table was devised, which permits rapid calculation of the tumor doubling time without the use of graphs. The presence of lung metastasis from some primary malignant salivary tumor is not necessarily an ominous sign: a long survival without symtoms is possible."
         ]
+    },
+    {
+        "source_url": "https://pubmed.ncbi.nlm.nih.gov/42995156/",
+        "source_type": "pubmed",
+        "author": "Christopher Li-Hsian Chen, Nagaendran Kandiah, Sumeet Kumar, Kim En Lee, Tau Ming Liew, Adeline Su Lyn Ng, Kok Pin Ng, Laura Bee Gek Tay, Simon Kang Seng Ting",
+        "published_date": "2026-11-04",
+        "language": "en",
+        "region": "US",
+        "topic_tags": [
+            "Alzheimer disease.",
+            "Singapore",
+            "early Alzheimer",
+            "Lecanemab",
+            "patients"
+        ],
+        "trust_score": 1.0,
+        "content_chunks": [
+            "Lecanemab in Singapore: Appropriate use recommendations for early Alzheimer's disease.. Journal: Annals of the Academy of Medicine, Singapore. Lecanemab, a monoclonal antibody targeting β-amyloid oligomers, protofibrils, and insoluble fibrils, has been approved for Alzheimer's disease (AD) treatment in Singapore, based on the phase 3 Clarity AD study. In this paper, the Singapore-adapted Appropriate Use Recommendations (AURs) serve to assist Singapore physicians in identifying patients who will likely benefit from treatment while ensuring effective monitoring. The AURs are based on the Singaporeapproved prescribing information combined with lecanemab phase 2 and 3 clinical trials and real-world data up to April 2026. The decision to initiate lecanemab should be based on careful evaluation of individuals, including Singapore-validated cognitive status tests to identify mild cognitive impairment (MCI) due to AD and mild AD dementia. Other important evaluations include baseline brain magnetic resonance imaging (MRI), assessment of the apolipoprotein E ε4 (APOEε4) genotype, and amyloid pathology confirmation. Guidance on identifying patients at increased risk of amyloid-related imaging abnormalities (ARIA) during treatment and other patient profiles warranting additional caution is provided. Recommendations for monitoring patients, managing infusion-related reactions, and identifying lecanemab discontinuation scenarios are included. Lecanemab should only be prescribed for patients with MCI due to AD or mild AD dementia following careful clinical evaluation confirming AD pathology, with caution exercised in patients at increased ARIA risk (e.g. APOEε4 gene carriers). During treatment, patients should receive regular monitoring for ARIA symptoms including follow-up MRI scans. Future directions include the development of a Singapore-specific registry to monitor patients and gather long-term data to support a consensus-driven framework to inform and optimise the use of lecanemab in Singapore."
+        ]
+    },
+    {
+        "source_url": "https://pubmed.ncbi.nlm.nih.gov/42995154/",
+        "source_type": "pubmed",
+        "author": "Logan Neitzke-Spruill, Jill Oliver Robinson, Alison Purcell, Dominic Sisti, Amy L McGuire, Holly Fernandez Lynch",
+        "published_date": "2026-01-01",
+        "language": "en",
+        "region": "US",
+        "topic_tags": [
+            "Psychedelic Research.",
+            "IRB",
+            "IRBs",
+            "IRB Oversight",
+            "research"
+        ],
+        "trust_score": 1.0,
+        "content_chunks": [
+            "Researchers' Experiences with IRB Oversight of Psychedelic Research.. Journal: Ethics & human research. Previous research raises concern that conservative institutional review board (IRB) approaches regarding stigmatized issues and vulnerable groups could similarly arise as an impediment to research with psychedelic drugs. We interviewed 20 US researchers who had been a principal investigator on at least one research protocol involving psychedelics about their experiences with IRB oversight and perspectives regarding what IRBs need to know. Respondents reported that their IRBs raised concern and asked questions about participant safety, consent, legal issues, and data security and confidentiality, typical domains for IRB consideration. They also mentioned several IRB knowledge gaps or misunderstandings about psychedelics, primarily about risks and safety, while emphasizing the importance of IRBs' understanding of psychedelic drug effects. Despite IRB concerns and misunderstandings, all study respondents ultimately reported positive or neutral current experiences with IRBs reviewing their protocols for research with psychedelics, which they often attributed to cultivating strong IRB relationships and helping IRBs achieve adequate knowledge about these types of studies. Although investigators in our study did not perceive their IRBs to be a significant barrier to research with psychedelics, less experienced investigators and IRBs may face different outcomes. As research with psychedelics continues to increase, both researchers and IRBs should be responsive to continued scientific developments and emergent best practices."
+        ]
     }
 ]

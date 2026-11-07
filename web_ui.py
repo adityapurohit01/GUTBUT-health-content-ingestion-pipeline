@@ -36,23 +36,46 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             --warning: #f59e0b;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background: var(--bg); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--text-main);
+            overflow: hidden;
+        }
+        body {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+        }
 
         /* Sidebar */
         aside {
-            width: 330px;
+            width: 320px;
+            min-width: 320px;
+            max-width: 320px;
+            flex-shrink: 0;
             background: #0d1322;
             border-right: 1px solid var(--panel-border);
             display: flex;
             flex-direction: column;
+            height: 100vh;
             padding: 20px;
+            overflow: hidden;
+            transition: all 0.25s ease;
+            z-index: 20;
         }
-        .logo { font-size: 1.25rem; font-weight: 700; color: var(--accent); display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
-        .control-group { margin-bottom: 20px; background: var(--panel); padding: 14px; border-radius: 10px; border: 1px solid var(--panel-border); }
+        aside.collapsed {
+            margin-left: -320px;
+        }
+        .logo { font-size: 1.25rem; font-weight: 700; color: var(--accent); display: flex; align-items: center; gap: 8px; margin-bottom: 20px; flex-shrink: 0; }
+        .control-group { margin-bottom: 16px; background: var(--panel); padding: 14px; border-radius: 10px; border: 1px solid var(--panel-border); flex-shrink: 0; }
         .control-label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; display: flex; justify-content: space-between; }
         .trust-slider { width: 100%; accent-color: var(--accent); cursor: pointer; }
         .trust-info { font-size: 0.76rem; color: var(--text-muted); margin-top: 8px; line-height: 1.4; }
-        .source-list { flex: 1; overflow-y: auto; margin-top: 10px; padding-right: 4px; }
+        .source-list { flex: 1; min-height: 0; overflow-y: auto; margin-top: 10px; padding-right: 4px; }
         .source-card {
             background: var(--panel);
             border: 1px solid var(--panel-border);
@@ -78,33 +101,92 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         .source-url:hover { text-decoration: underline; }
 
         /* Main Chat Area */
-        main { flex: 1; display: flex; flex-direction: column; background: var(--bg); }
+        main {
+            flex: 1;
+            min-width: 0;
+            height: 100vh;
+            max-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+            overflow: hidden;
+            position: relative;
+        }
         header {
-            padding: 16px 24px;
+            flex-shrink: 0;
+            padding: 14px 20px;
             border-bottom: 1px solid var(--panel-border);
             display: flex;
             justify-content: space-between;
             align-items: center;
             background: #0d1322;
+            z-index: 10;
         }
-        .header-title { font-size: 1.1rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-        .header-sub { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
-        .chat-container { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 18px; }
+        .header-title { font-size: 1.05rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .header-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+        .header-actions { display: flex; gap: 8px; align-items: center; }
+        .btn-secondary {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            background: #1e293b;
+            color: #cbd5e1;
+            border: 1px solid var(--panel-border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .btn-secondary:hover { background: #334155; color: #fff; }
 
-        .message { display: flex; flex-direction: column; max-width: 82%; animation: fadeIn 0.25s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .chat-container {
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 20px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
 
-        .message.user { align-self: flex-end; }
-        .message.bot { align-self: flex-start; }
+        .message {
+            display: flex;
+            flex-direction: column;
+            max-width: 85%;
+            animation: fadeIn 0.2s ease-in-out;
+            word-break: break-word;
+            overflow-wrap: anywhere;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        .message.bot {
+            align-self: flex-start;
+            margin-right: auto;
+            max-width: 90%;
+        }
 
         .bubble {
-            padding: 16px 20px;
+            padding: 14px 18px;
             border-radius: 12px;
             font-size: 0.92rem;
-            line-height: 1.65;
+            line-height: 1.6;
+            word-break: break-word;
+            overflow-wrap: anywhere;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
-        .message.user .bubble { background: var(--user-bubble); color: #fff; border-bottom-right-radius: 2px; }
-        .message.bot .bubble { background: var(--bot-bubble); color: var(--text-main); border: 1px solid var(--panel-border); border-bottom-left-radius: 2px; }
+        .message.user .bubble {
+            background: var(--user-bubble);
+            color: #fff;
+            border-bottom-right-radius: 2px;
+        }
+        .message.bot .bubble {
+            background: var(--bot-bubble);
+            color: var(--text-main);
+            border: 1px solid var(--panel-border);
+            border-bottom-left-radius: 2px;
+        }
 
         .bubble h1, .bubble h2, .bubble h3 { margin: 12px 0 6px 0; color: #fff; font-size: 1.05rem; }
         .bubble ul, .bubble ol { padding-left: 20px; margin: 8px 0; }
@@ -120,20 +202,24 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             border: 1px solid #1e293b;
             border-radius: 8px;
             font-size: 0.78rem;
+            word-break: break-word;
+            overflow-wrap: anywhere;
         }
         .citations-header { font-weight: 600; color: var(--accent); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
         .citation-item { margin-bottom: 6px; color: var(--text-muted); line-height: 1.4; }
         .citation-item strong { color: #f1f5f9; }
-        .citation-item a { color: #60a5fa; text-decoration: none; }
+        .citation-item a { color: #60a5fa; text-decoration: none; word-break: break-all; }
 
         /* Suggestions Pills */
         .suggestions {
+            flex-shrink: 0;
             display: flex;
             gap: 8px;
             overflow-x: auto;
             padding: 10px 24px;
             background: #0d1322;
             border-top: 1px solid var(--panel-border);
+            z-index: 5;
         }
         .pill {
             background: #1e293b;
@@ -149,11 +235,18 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         .pill:hover { background: #334155; border-color: var(--accent); color: #fff; }
 
         /* Input Area */
-        footer { padding: 16px 24px 20px 24px; background: #0d1322; }
-        .input-bar { display: flex; gap: 12px; }
+        footer {
+            flex-shrink: 0;
+            padding: 14px 24px 18px 24px;
+            background: #0d1322;
+            border-top: 1px solid var(--panel-border);
+            z-index: 5;
+        }
+        .input-bar { display: flex; gap: 12px; width: 100%; }
         input[type="text"] {
             flex: 1;
-            padding: 14px 18px;
+            min-width: 0;
+            padding: 12px 18px;
             background: var(--panel);
             border: 1px solid var(--panel-border);
             border-radius: 10px;
@@ -163,8 +256,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             transition: border-color 0.15s ease;
         }
         input[type="text"]:focus { border-color: var(--accent); }
-        button {
-            padding: 14px 24px;
+        button.send-btn {
+            flex-shrink: 0;
+            padding: 12px 22px;
             background: var(--accent);
             color: #042f2e;
             border: none;
@@ -173,9 +267,10 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             font-size: 0.95rem;
             cursor: pointer;
             transition: all 0.15s ease;
+            white-space: nowrap;
         }
-        button:hover { background: var(--accent-hover); }
-        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        button.send-btn:hover { background: var(--accent-hover); }
+        button.send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         /* Loading Dots */
         .typing-dots span {
@@ -193,7 +288,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     </style>
 </head>
 <body>
-    <aside>
+    <aside id="sidebar">
         <div class="logo">
             <span>🧬</span> GutBut Health AI
         </div>
@@ -224,7 +319,10 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                 </div>
                 <div class="header-sub">Powered by Google Gemini 3.5 Flash & 3,072-dim Vector Embeddings</div>
             </div>
-            <button onclick="clearChat()" style="padding: 6px 14px; font-size: 0.8rem; background: #1e293b; color: #94a3b8; border: 1px solid var(--panel-border);">Clear Chat</button>
+            <div class="header-actions">
+                <button class="btn-secondary" onclick="toggleSidebar()">☰ Sources</button>
+                <button class="btn-secondary" onclick="clearChat()">Clear Chat</button>
+            </div>
         </header>
 
         <div class="chat-container" id="chat">
@@ -253,7 +351,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         <footer>
             <div class="input-bar">
                 <input type="text" id="user-input" placeholder="Ask a health question (e.g. How does dietary fiber protect the colon?)..." onkeydown="if(event.key==='Enter') sendQuestion()">
-                <button id="send-btn" onclick="sendQuestion()">Ask GutBut</button>
+                <button id="send-btn" class="send-btn" onclick="sendQuestion()">Ask GutBut</button>
             </div>
         </footer>
     </main>
@@ -323,14 +421,14 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             uMsg.className = 'message user';
             uMsg.innerHTML = `<div class="bubble">${escapeHtml(query)}</div>`;
             chat.appendChild(uMsg);
-            chat.scrollTop = chat.scrollHeight;
+            scrollToBottom();
 
             // Append loading bot message
             const bMsg = document.createElement('div');
             bMsg.className = 'message bot';
             bMsg.innerHTML = `<div class="bubble"><div class="typing-dots"><span></span><span></span><span></span></div> <span style="font-size: 0.8rem; color: #94a3b8; margin-left: 8px;">Retrieving evidence and reasoning...</span></div>`;
             chat.appendChild(bMsg);
-            chat.scrollTop = chat.scrollHeight;
+            scrollToBottom();
 
             try {
                 const minTrust = parseFloat(slider.value);
@@ -363,14 +461,27 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
                 const renderedMarkdown = marked.parse(data.answer || "");
                 bMsg.innerHTML = `<div class="bubble">${dynamicNotice}${renderedMarkdown}${citationsHtml}</div>`;
+                scrollToBottom();
             } catch (e) {
                 bMsg.innerHTML = `<div class="bubble" style="color: #ef4444;">Error: ${e.message}</div>`;
+                scrollToBottom();
             } finally {
                 input.disabled = false;
                 sendBtn.disabled = false;
                 input.focus();
-                chat.scrollTop = chat.scrollHeight;
+                scrollToBottom();
             }
+        }
+
+        function scrollToBottom() {
+            setTimeout(() => {
+                chat.scrollTop = chat.scrollHeight;
+            }, 60);
+        }
+
+        function toggleSidebar() {
+            const aside = document.getElementById('sidebar');
+            aside.classList.toggle('collapsed');
         }
 
         function escapeHtml(text) {
