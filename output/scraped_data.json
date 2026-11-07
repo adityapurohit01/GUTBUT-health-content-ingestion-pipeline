@@ -163,5 +163,24 @@
         "content_chunks": [
             "Gut-liver axis dysregulation in colitis underlies structure-dependent pharmacokinetics of a traditional Chinese medicine.. Journal: Pharmacological research. Pharmacokinetic (PK) variability under pathological conditions poses challenges for drug efficacy and safety. Although clinical data comparing PK in healthy individuals and patients is limited, evidence suggests that disease-induced variability is common and clinically significant. The liver and gut microbiota are key contributors to this variability, yet their individual and combined roles-particularly via the gut-liver axis-remain unclear, especially for complex herbal medicines. Ulcerative colitis (UC), characterized by immune dysregulation, gut microbiota dysbiosis, and hepatic inflammation, provides a relevant model to study these interactions. In this study, we investigated how UC-induced alterations in liver metabolism and gut microbiota affect the PK profiles of a multi-component herbal formula. Comparative analysis between healthy and colitis mice revealed structure-dependent PK shifts: iridoids and flavonoids exhibited reduced systemic exposure (e.g., 0.8-fold change in AUC for loganin), while saponins and polyphenols demonstrated altered colonic availability. Additionally, alkaloids showed delayed systemic elimination (e.g., 5.8-fold change in T<sub>1/2</sub> for berberine). Multi-omics profiling identified disruptions along the gut-liver axis, including downregulated hepatic enzymes (CYPs, UGTs) and microbial changes such as 125% increased glycoside hydrolases (GHs). Specific compounds-berberine, liquiritin, and glycyrrhizic acid-were influenced by both hepatic and microbial metabolism, while loganin and curcumin were primarily affected by gut processes. Dysfunction of GHs, particularly β-glucosidase and β-glucuronidase, was confirmed using human microbiome datasets and clinical samples, linking PK variability to disease activity. This study establishes a baseline of colitis-induced PK variability across various natural compounds, identifies key determinants, and proposes hypotheses for biomarker development."
         ]
+    },
+    {
+        "source_url": "https://pubmed.ncbi.nlm.nih.gov/178195/",
+        "source_type": "pubmed",
+        "author": "F G Twardzik, D M Sklaroff",
+        "published_date": "1976-01-01",
+        "language": "en",
+        "region": "US",
+        "topic_tags": [
+            "gland tumors.",
+            "Growth analysis",
+            "pulmonary metastases",
+            "salivary gland",
+            "tumor doubling"
+        ],
+        "trust_score": 0.84,
+        "content_chunks": [
+            "Growth analysis of pulmonary metastases from salivary gland tumors.. Journal: AJR. American journal of roentgenology. Three cases of primary salivary gland tumors with lung metastasis are presented with extremely long survival (six, ten, and twelve years). The tumor doubling time was calculated and the growth rate of the pulmonary metastasis was found to be slow and erratic. A simplified table was devised, which permits rapid calculation of the tumor doubling time without the use of graphs. The presence of lung metastasis from some primary malignant salivary tumor is not necessarily an ominous sign: a long survival without symtoms is possible."
+        ]
     }
 ]

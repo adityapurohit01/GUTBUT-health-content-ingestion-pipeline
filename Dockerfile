@@ -26,3 +26,4 @@ EXPOSE 8000
 
 # Default entry point: Launch the Web UI
 CMD ["python", "web_ui.py", "8000"]
+
