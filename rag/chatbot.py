@@ -1,9 +1,11 @@
 import logging
 import os
+import re
 from typing import List, Dict, Any, Generator, Optional
 from google import genai
 from google.genai import types
 from rag.vector_store import HealthVectorStore
+from rag.dynamic_scraper import DynamicScraperEngine
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
@@ -45,6 +47,7 @@ class HealthRAGChatbot:
         self.client = genai.Client(api_key=self.api_key)
         self.model_name = model_name
         self.min_trust_score = min_trust_score
+        self.auto_scraper = DynamicScraperEngine()
         self.history: List[Dict[str, str]] = []
 
     def _format_context(self, retrieved_chunks: List[Dict[str, Any]]) -> str:
@@ -66,27 +69,75 @@ class HealthRAGChatbot:
         lines.append("=========================================")
         return "\n".join(lines)
 
+    def _is_coverage_insufficient(self, chunks: List[Dict[str, Any]], user_query: str) -> bool:
+        """
+        Detects if existing knowledge lacks coverage on the user's specific topic,
+        using both similarity score threshold and subject-matter presence checks.
+        """
+        if not chunks:
+            return True
+
+        top_similarity = chunks[0].get("similarity", 0.0)
+        if top_similarity < 0.62:
+            return True
+
+        # Extract specific subject keywords (filtering out generic domain words)
+        words = [re.sub(r'[^\w]', '', w.lower()) for w in user_query.split()]
+        common_terms = {
+            "what", "is", "are", "how", "does", "do", "can", "could", "tell", "me", "about",
+            "explain", "the", "and", "in", "of", "to", "a", "an", "with", "for", "on", "my",
+            "microbiome", "bacteria", "gut", "health", "affect", "affects", "effect", "effects",
+            "influence", "body", "human", "system", "role", "help", "work", "ways", "article",
+            "research", "study", "studies"
+        }
+        subject_keywords = [w for w in words if len(w) > 3 and w not in common_terms]
+        if subject_keywords:
+            combined_text = " ".join([c["text"].lower() for c in chunks[:3]])
+            has_subject = any(term in combined_text for term in subject_keywords)
+            if not has_subject:
+                return True
+
+        return False
+
     def ask(
         self,
         user_query: str,
         top_k: int = 4,
-        min_trust_score: Optional[float] = None
+        min_trust_score: Optional[float] = None,
+        auto_scrape: bool = True
     ) -> Dict[str, Any]:
         """
         Retrieves trustworthy passages and generates a grounded response.
+        If local evidence is insufficient, autonomously discovers and scrapes
+        new medical literature from PubMed, scores it, and embeds it.
         """
         threshold = self.min_trust_score if min_trust_score is None else min_trust_score
         
-        # 1. Retrieve trust-weighted context chunks
+        # 1. First retrieval attempt against local database
         chunks = self.vector_store.search(
             query=user_query,
             top_k=top_k,
             min_trust_score=threshold
         )
 
+        newly_scraped = []
+        # 2. Check if coverage is insufficient
+        if auto_scrape and self._is_coverage_insufficient(chunks, user_query):
+            logging.info(f"⚡ Local coverage low or missing key terms. Triggering dynamic auto-scraper...")
+            new_sources = self.auto_scraper.discover_and_scrape(user_query, max_articles=2)
+            if new_sources:
+                newly_scraped = new_sources
+                self.vector_store.add_new_sources(new_sources)
+                # Re-retrieve with newly indexed evidence
+                chunks = self.vector_store.search(
+                    query=user_query,
+                    top_k=top_k,
+                    min_trust_score=threshold
+                )
+
         formatted_context = self._format_context(chunks)
 
-        # 2. Build Prompt
+        # 3. Build Prompt
         prompt = (
             f"{formatted_context}\n\n"
             f"User Question: {user_query}\n\n"
@@ -126,7 +177,15 @@ class HealthRAGChatbot:
         return {
             "answer": answer_text,
             "sources": chunks,
-            "min_trust_used": threshold
+            "min_trust_used": threshold,
+            "newly_scraped": [
+                {
+                    "url": s["source_url"],
+                    "author": s["author"],
+                    "trust": s["trust_score"]
+                }
+                for s in newly_scraped
+            ]
         }
 
     def reset_history(self):

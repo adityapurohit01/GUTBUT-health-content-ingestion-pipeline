@@ -118,6 +118,13 @@ def run_cli_interactive():
             print(f"\n🔎 Searching evidence with trust score >= {min_trust:.2f}...")
             result = chatbot.ask(user_input, min_trust_score=min_trust)
 
+            newly_scraped = result.get("newly_scraped", [])
+            if newly_scraped:
+                print(f"\n✨ [AUTONOMOUS DISCOVERY] Local database had low coverage for this topic.")
+                print(f"   Successfully queried PubMed, scraped, and scored {len(newly_scraped)} new medical study:")
+                for ns in newly_scraped:
+                    print(f"   -> {ns['author']} (Trust: {ns['trust']:.2f}) | {ns['url']}")
+
             # Display retrieved evidence sources
             sources = result.get("sources", [])
             if sources:
@@ -154,6 +161,14 @@ def main():
         store = HealthVectorStore()
         bot = HealthRAGChatbot(vector_store=store, min_trust_score=args.min_trust)
         result = bot.ask(args.query)
+
+        newly_scraped = result.get("newly_scraped", [])
+        if newly_scraped:
+            print(f"\n✨ [AUTONOMOUS DISCOVERY] Local database lacked specific coverage on this topic.")
+            print(f"   Successfully queried PubMed, scraped, and scored {len(newly_scraped)} new medical study:")
+            for ns in newly_scraped:
+                print(f"   -> {ns['author']} (Trust: {ns['trust']:.2f}) | {ns['url']}")
+
         print("\nAnswer:")
         print(result["answer"])
         print("\nSources:")

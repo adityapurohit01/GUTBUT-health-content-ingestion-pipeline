@@ -125,5 +125,43 @@
         "content_chunks": [
             "Gut Microbiome: Profound Implications for Diet and Disease.. Journal: Nutrients. The gut microbiome plays an important role in human health and influences the development of chronic diseases ranging from metabolic disease to gastrointestinal disorders and colorectal cancer. Of increasing prevalence in Western societies, these conditions carry a high burden of care. Dietary patterns and environmental factors have a profound effect on shaping gut microbiota in real time. Diverse populations of intestinal bacteria mediate their beneficial effects through the fermentation of dietary fiber to produce short-chain fatty acids, endogenous signals with important roles in lipid homeostasis and reducing inflammation. Recent progress shows that an individual's starting microbial profile is a key determinant in predicting their response to intervention with live probiotics. The gut microbiota is complex and challenging to characterize. Enterotypes have been proposed using metrics such as alpha species diversity, the ratio of Firmicutes to Bacteroidetes phyla, and the relative abundance of beneficial genera (e.g., <i>Bifidobacterium</i>, <i>Akkermansia</i>) versus facultative anaerobes (<i>E. coli</i>), pro-inflammatory <i>Ruminococcus</i>, or nonbacterial microbes. Microbiota composition and relative populations of bacterial species are linked to physiologic health along different axes. We review the role of diet quality, carbohydrate intake, fermentable FODMAPs, and prebiotic fiber in maintaining healthy gut flora. The implications are discussed for various conditions including obesity, diabetes, irritable bowel syndrome, inflammatory bowel disease, depression, and cardiovascular disease."
         ]
+    },
+    {
+        "source_url": "https://pubmed.ncbi.nlm.nih.gov/42340489/",
+        "source_type": "pubmed",
+        "author": "Priya Manna, Shayeri Chatterjee Ganguly, Arup Chatterjee, Banani Mondal, Aditi Maity, Srijita Chatterjee, Tanmoy Guria, Mainak Chakraborty",
+        "published_date": "2026-06-24",
+        "language": "en",
+        "region": "US",
+        "topic_tags": [
+            "mechanistic roadmap",
+            "Dementia",
+            "Metabolic brain",
+            "Treating dementia",
+            "GBA"
+        ],
+        "trust_score": 1.0,
+        "content_chunks": [
+            "Targeting microbiota-gut-brain axis with phytochemicals: a mechanistic roadmap for dementia.. Journal: Metabolic brain disease. Dementia is a growing global health concern, with limited therapeutic options. Treating dementia is a crucial but often overlooked part of neurological care for the elderly. The gut microbiota plays an essential role in the bidirectional interaction between the gut and the brain. Growing evidence suggests that gut microbes, which can influence neural development, modulate neurotransmission, and affect behaviour, may contribute to the development and pathophysiology of various neurodevelopmental, neuropsychiatric, and neurological disorders like dementia. This underscores the need for new interventions targeting the gut-brain axis(GBA). This review highlights the role and application of phytochemicals in treating dementia by modifying the GBA. We outline the harmful relationship between dementia and microbial dysbiosis, focusing on abnormal tryptophan- kynurenine metabolism, impaired SCFA synthesis, disruption of the BBB, and altered microglial activation states. Nevertheless, the potential of different phytochemicals, such as flavonoids, alkaloids, terpenoids, and polyphenols, to enhance neuroprotective metabolite production, restore microbial balance, regulate inflammatory signalling (e.g., NF- κb, Nrf 2, MAPK, and TLR 4), and improve synaptic plasticity via pathways like BDNF-CREB, is under investigation. Key bioactive compounds like berberine, resveratrol, and curcumin are being tested for their efficacy concerning molecular targets and outcomes in both preclinical and clinical models of cognitive decline. In addition to specific phytochemicals, probiotic and prebiotic synergistic approaches may enhance gut homeostasis and cognitive resilience, opening avenues for functional food- based treatments. Although promising, challenges to clinical application remain, such as low bioavailability, standardisation issues, and interindividual microbiome variability. This review emphasises prospects for precision nutrition and microbiome- targeted therapies in dementia, discusses translational barriers, and summarises recent data on phytochemical modulation of the GBA in dementia."
+        ]
+    },
+    {
+        "source_url": "https://pubmed.ncbi.nlm.nih.gov/41690381/",
+        "source_type": "pubmed",
+        "author": "Ka Wing Cheng, Jingchun Shi, Mengyang Hou, Ziwan Ning, Mengbi Yang, Yujuan Zhou, Ping Zheng, Heung Lam Mok, Cheng Lyu, Chunhua Huang, Yiqi Xu, Wing Lam Wendy To, Jie Zhang, Jialing Zhang, Xuan Zhang, Chengyuan Lin, Hor Yue Tan, Min Ye, Lin Zhu, Zhaoxiang Bian",
+        "published_date": "2026-02-12",
+        "language": "en",
+        "region": "US",
+        "topic_tags": [
+            "Chinese medicine.",
+            "traditional Chinese",
+            "gut microbiota",
+            "Chinese",
+            "variability"
+        ],
+        "trust_score": 1.0,
+        "content_chunks": [
+            "Gut-liver axis dysregulation in colitis underlies structure-dependent pharmacokinetics of a traditional Chinese medicine.. Journal: Pharmacological research. Pharmacokinetic (PK) variability under pathological conditions poses challenges for drug efficacy and safety. Although clinical data comparing PK in healthy individuals and patients is limited, evidence suggests that disease-induced variability is common and clinically significant. The liver and gut microbiota are key contributors to this variability, yet their individual and combined roles-particularly via the gut-liver axis-remain unclear, especially for complex herbal medicines. Ulcerative colitis (UC), characterized by immune dysregulation, gut microbiota dysbiosis, and hepatic inflammation, provides a relevant model to study these interactions. In this study, we investigated how UC-induced alterations in liver metabolism and gut microbiota affect the PK profiles of a multi-component herbal formula. Comparative analysis between healthy and colitis mice revealed structure-dependent PK shifts: iridoids and flavonoids exhibited reduced systemic exposure (e.g., 0.8-fold change in AUC for loganin), while saponins and polyphenols demonstrated altered colonic availability. Additionally, alkaloids showed delayed systemic elimination (e.g., 5.8-fold change in T<sub>1/2</sub> for berberine). Multi-omics profiling identified disruptions along the gut-liver axis, including downregulated hepatic enzymes (CYPs, UGTs) and microbial changes such as 125% increased glycoside hydrolases (GHs). Specific compounds-berberine, liquiritin, and glycyrrhizic acid-were influenced by both hepatic and microbial metabolism, while loganin and curcumin were primarily affected by gut processes. Dysfunction of GHs, particularly β-glucosidase and β-glucuronidase, was confirmed using human microbiome datasets and clinical samples, linking PK variability to disease activity. This study establishes a baseline of colitis-induced PK variability across various natural compounds, identifies key determinants, and proposes hypotheses for biomarker development."
+        ]
     }
 ]

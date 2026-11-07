@@ -353,8 +353,16 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                     citationsHtml = `<div class="citations-box" style="color: #f59e0b;">⚠️ No evidence sources passed the current trust filter (${minTrust.toFixed(2)}). Lower the slider to include more sources.</div>`;
                 }
 
+                let dynamicNotice = '';
+                if (data.newly_scraped && data.newly_scraped.length > 0) {
+                    dynamicNotice = `<div style="background: #064e3b; color: #a7f3d0; padding: 10px 14px; border-radius: 8px; margin-bottom: 12px; font-size: 0.82rem; border: 1px solid #059669;">
+                        <strong>✨ Autonomous Discovery Triggered:</strong> This topic had low local coverage. GutBut autonomously queried PubMed, scraped and scored <strong>${data.newly_scraped.length} new research study</strong>, and embedded it into the knowledge base in real-time!
+                    </div>`;
+                    loadSources(); // Refresh sidebar with newly scraped sources
+                }
+
                 const renderedMarkdown = marked.parse(data.answer || "");
-                bMsg.innerHTML = `<div class="bubble">${renderedMarkdown}${citationsHtml}</div>`;
+                bMsg.innerHTML = `<div class="bubble">${dynamicNotice}${renderedMarkdown}${citationsHtml}</div>`;
             } catch (e) {
                 bMsg.innerHTML = `<div class="bubble" style="color: #ef4444;">Error: ${e.message}</div>`;
             } finally {

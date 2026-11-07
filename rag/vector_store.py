@@ -119,6 +119,89 @@ class HealthVectorStore:
             json.dump(cache_records, f)
         logging.info(f"Saved {len(cache_records)} embeddings to cache at {self.cache_path}.")
 
+    def add_new_sources(self, new_sources: List[Dict[str, Any]]):
+        """
+        Dynamically embeds newly scraped sources, updates in-memory embeddings matrix,
+        and appends new embeddings to cache file.
+        """
+        if not new_sources:
+            return
+
+        new_chunks = []
+        base_s_idx = len(self.chunks)
+        for s_idx, source in enumerate(new_sources):
+            source_url = source.get("source_url", "")
+            source_type = source.get("source_type", "")
+            author = source.get("author", "Unknown")
+            published_date = source.get("published_date", "")
+            trust_score = float(source.get("trust_score", 0.0) or 0.0)
+            topic_tags = source.get("topic_tags", [])
+            content_chunks = source.get("content_chunks", [])
+
+            for c_idx, chunk_text in enumerate(content_chunks):
+                if chunk_text.strip():
+                    new_chunks.append({
+                        "chunk_id": f"dynamic_{source_type}_{base_s_idx + s_idx}_{c_idx}",
+                        "text": chunk_text.strip(),
+                        "source_url": source_url,
+                        "source_type": source_type,
+                        "author": author,
+                        "published_date": published_date,
+                        "trust_score": trust_score,
+                        "topic_tags": topic_tags
+                    })
+
+        if not new_chunks:
+            return
+
+        logging.info(f"Generating embeddings for {len(new_chunks)} dynamically scraped chunks...")
+        new_embeddings = []
+        new_cache_records = []
+
+        for chunk in new_chunks:
+            try:
+                res = self.client.models.embed_content(
+                    model=self.embedding_model,
+                    contents=chunk["text"]
+                )
+                emb = res.embeddings[0].values
+                new_embeddings.append(emb)
+                new_cache_records.append({
+                    "chunk_id": chunk["chunk_id"],
+                    "embedding": emb
+                })
+            except Exception as e:
+                logging.error(f"Error embedding new chunk: {e}")
+                zero_vec = [0.0] * 3072
+                new_embeddings.append(zero_vec)
+                new_cache_records.append({
+                    "chunk_id": chunk["chunk_id"],
+                    "embedding": zero_vec
+                })
+
+        new_emb_array = np.array(new_embeddings, dtype=np.float32)
+
+        # Update in-memory state
+        if self.embeddings is None or len(self.embeddings) == 0:
+            self.embeddings = new_emb_array
+        else:
+            self.embeddings = np.vstack([self.embeddings, new_emb_array])
+
+        self.chunks.extend(new_chunks)
+
+        # Update on-disk cache
+        try:
+            cached_data = []
+            if os.path.exists(self.cache_path):
+                with open(self.cache_path, "r", encoding="utf-8") as f:
+                    cached_data = json.load(f)
+            cached_data.extend(new_cache_records)
+            with open(self.cache_path, "w", encoding="utf-8") as f:
+                json.dump(cached_data, f)
+            logging.info(f"Updated vector cache with {len(new_cache_records)} new embeddings.")
+        except Exception as e:
+            logging.error(f"Failed to append to vector cache: {e}")
+
     def search(
         self,
         query: str,
