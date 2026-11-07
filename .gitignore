@@ -13,3 +13,7 @@ env/
 
 # MacOS
 .DS_Store
+
+# Embeddings cache
+output/embeddings.json
+*.npy

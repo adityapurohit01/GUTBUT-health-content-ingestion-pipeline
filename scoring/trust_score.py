@@ -43,18 +43,23 @@ def calculate_trust_score(item: dict) -> float:
     
     # --- 1. Author Credibility (0.3) ---
     author_score = 0.5 # default unknown author
-    if not author:
+    if not author or not author.strip():
         author_score = 0.1 # heavily penalize missing author
+    elif source_type == "pubmed":
+        author_score = 1.0 # Indexed researchers
     else:
-        author_lower = author.lower()
-        if source_type == "pubmed":
-             author_score = 1.0 # Indexed researchers
+        # Handle multiple authors by splitting and computing the average credibility score
+        author_list = [a.strip() for a in re.split(r'[,;]+', author) if a.strip()]
+        if not author_list:
+            author_score = 0.1
         else:
-             medical_titles = ["dr.", "md", "ph.d", "doctor"]
-             for title in medical_titles:
-                 if title in author_lower:
-                     author_score = 0.9
-                     break
+            individual_scores = []
+            medical_titles = ["dr.", "md", "ph.d", "phd", "doctor", "prof.", "professor"]
+            for single_author in author_list:
+                s_lower = single_author.lower()
+                has_title = any(t in s_lower for t in medical_titles)
+                individual_scores.append(0.9 if has_title else 0.5)
+            author_score = sum(individual_scores) / len(individual_scores)
                  
     # --- 2. Domain Authority (0.2) ---
     domain_score = 0.4 # Default

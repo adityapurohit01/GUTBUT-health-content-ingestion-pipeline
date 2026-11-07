@@ -48,16 +48,22 @@ class PubMedScraper:
                     y = str(ji["PubDate"].get("Year", ""))
                     if y: published_date = f"{y}-01-01"
 
+            journal_title = ""
+            if "Journal" in article and "Title" in article["Journal"]:
+                journal_title = str(article["Journal"]["Title"])
+
             abstract = ""
             if "Abstract" in article and "AbstractText" in article["Abstract"]:
                 abstract = " ".join([str(t) for t in article["Abstract"]["AbstractText"]])
+
+            content_text = f"{title}. Journal: {journal_title}. {abstract}" if journal_title else f"{title}. {abstract}"
 
             return {
                 "source_url": url,
                 "source_type": "pubmed",
                 "author": author_str,
                 "published_date": published_date,
-                "raw_text": title + ". " + abstract,
+                "raw_text": content_text,
             }
         except Exception as e:
             logging.error(f"Error fetching PubMed {pmid}: {e}")

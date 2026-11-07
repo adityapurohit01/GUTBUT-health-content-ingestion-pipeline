@@ -12,10 +12,11 @@ def detect_language(text: str) -> str:
         return "en"
 
 def detect_region(url: str, lang: str) -> str:
-    """Very crude heuristic to detect region based on TLD or Language."""
-    if ".co.uk" in url: return "UK"
-    if ".com.au" in url: return "AU"
-    if ".ca" in url: return "CA"
+    """Crude heuristic to detect region based on TLD or Language."""
+    url_lower = url.lower()
+    if ".co.uk" in url_lower or ".gov.uk" in url_lower or ".nhs.uk" in url_lower or ".uk/" in url_lower: return "UK"
+    if ".com.au" in url_lower or ".gov.au" in url_lower or ".au/" in url_lower: return "AU"
+    if ".ca/" in url_lower or ".gc.ca" in url_lower: return "CA"
     
     if lang == "en": return "US"
     if lang == "fr": return "FR"

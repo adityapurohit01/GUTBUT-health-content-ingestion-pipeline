@@ -1,0 +1,12 @@
+beautifulsoup4
+requests
+biopython
+youtube-transcript-api
+langdetect
+yake
+newspaper3k
+lxml_html_clean
+google-genai
+python-dotenv
+numpy
+pytest

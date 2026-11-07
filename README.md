@@ -16,14 +16,28 @@ Run the pipeline to successfully scrape all 6 test sources and export them into 
 ```bash
 git clone https://github.com/adityapurohit01/GUTBUT-health-content-ingestion-pipeline.git
 cd GUTBUT-health-content-ingestion-pipeline
-pip install bs4 requests biopython youtube-transcript-api langdetect yake newspaper3k lxml_html_clean
+pip install -r requirements.txt
 ```
 
-**2. Execute the Pipeline**
+**2. Execute the Scraping Pipeline**
 ```bash
 python main.py
 ```
 *The final structured dataset will be securely written to `output/scraped_data.json`.*
+
+**3. Launch the Trust-Aware RAG Chatbot (Gemini)**
+
+* **Option A: Graphical Web UI (Browser)**
+  ```bash
+  python web_ui.py
+  ```
+  *Open `http://localhost:8000` to chat with an interactive Trust Filter slider, live evidence cards, and citations.*
+
+* **Option B: Terminal CLI**
+  ```bash
+  python rag_bot.py
+  ```
+  *Or query directly with `python rag_bot.py --query "your question" --min-trust 0.5`.*
 
 ---
 
@@ -32,7 +46,11 @@ The codebase strictly adheres to the Single-Responsibility Principle, avoiding m
 
 ```text
 project/
-├── main.py                     # Central orchestrator 
+├── main.py                     # Central scraper orchestrator 
+├── rag_bot.py                  # Interactive Trust-Aware RAG Chatbot CLI
+├── rag/
+│   ├── vector_store.py         # Gemini embeddings + Trust-weighted retrieval
+│   └── chatbot.py              # Gemini 3.5 Flash RAG generator & grounding
 ├── scraper/                 
 │   ├── blog_scraper.py         # newspaper3k + JS-LD + BS4 fallback loop
 │   ├── youtube_scraper.py      # Instance-based transcript API extraction
@@ -43,7 +61,8 @@ project/
 │   ├── chunking.py             # Semantic sentence-boundary RAG chunker
 │   └── tagging.py              # Rapid, local statistical keyword extraction (YAKE)
 └── output/
-    └── scraped_data.json       # Clean, unified JSON datastore (Generated)
+    ├── scraped_data.json       # Clean, unified JSON datastore (Generated)
+    └── embeddings.json         # Cached 3072-dim Gemini embeddings
 ```
 
 ---

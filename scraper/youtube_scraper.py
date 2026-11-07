@@ -46,7 +46,12 @@ class YouTubeScraper:
             title_tag = soup.find("meta", {"property": "og:title"})
             if title_tag: title = title_tag.get("content", "")
 
-            raw_text = (title + ". " + transcript_text) if title else transcript_text
+            description = ""
+            desc_tag = soup.find("meta", {"property": "og:description"}) or soup.find("meta", {"name": "description"})
+            if desc_tag: description = desc_tag.get("content", "")
+
+            content_parts = [p for p in [title, description, transcript_text] if p]
+            raw_text = ". ".join(content_parts)
 
             return {
                 "source_url": url,
